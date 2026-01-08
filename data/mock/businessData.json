@@ -1,0 +1,97 @@
+{
+  "scenarios": {
+    "normal": {
+      "name": "正常运营",
+      "description": "业务平稳发展，各项指标在小幅范围内正常波动",
+      "baseMetrics": {
+        "totalRevenue": { "value": 8500000, "unit": "元", "volatility": 0.05 },
+        "newCustomers": { "value": 15000, "unit": "人", "volatility": 0.08 },
+        "customerRetention": { "value": 72, "unit": "%", "volatility": 0.06 },
+        "averageOrderValue": { "value": 680, "unit": "元", "volatility": 0.04 },
+        "operationalCost": { "value": 2100000, "unit": "元", "volatility": 0.03 },
+        "profitMargin": { "value": 28, "unit": "%", "volatility": 0.05 },
+        "marketShare": { "value": 12.5, "unit": "%", "volatility": 0.02 },
+        "customerSatisfaction": { "value": 86, "unit": "分", "volatility": 0.04 },
+        "employeeProductivity": { "value": 15000, "unit": "元/人", "volatility": 0.06 }
+      }
+    },
+    "promotion": {
+      "name": "促销活动",
+      "description": "大型促销活动，市场反响热烈，各项指标大幅上升",
+      "baseMetrics": {
+        "totalRevenue": { "value": 12000000, "unit": "元", "volatility": 0.12 },
+        "newCustomers": { "value": 28000, "unit": "人", "volatility": 0.15 },
+        "customerRetention": { "value": 78, "unit": "%", "volatility": 0.1 },
+        "averageOrderValue": { "value": 620, "unit": "元", "volatility": 0.08 },
+        "operationalCost": { "value": 2800000, "unit": "元", "volatility": 0.05 },
+        "profitMargin": { "value": 25, "unit": "%", "volatility": 0.08 },
+        "marketShare": { "value": 14.8, "unit": "%", "volatility": 0.03 },
+        "customerSatisfaction": { "value": 92, "unit": "分", "volatility": 0.03 },
+        "employeeProductivity": { "value": 18000, "unit": "元/人", "volatility": 0.08 }
+      }
+    },
+    "off_season": {
+      "name": "业务淡季",
+      "description": "市场需求疲软，各项指标有所下降",
+      "baseMetrics": {
+        "totalRevenue": { "value": 6200000, "unit": "元", "volatility": 0.1 },
+        "newCustomers": { "value": 8500, "unit": "人", "volatility": 0.12 },
+        "customerRetention": { "value": 68, "unit": "%", "volatility": 0.08 },
+        "averageOrderValue": { "value": 710, "unit": "元", "volatility": 0.06 },
+        "operationalCost": { "value": 1800000, "unit": "元", "volatility": 0.04 },
+        "profitMargin": { "value": 22, "unit": "%", "volatility": 0.06 },
+        "marketShare": { "value": 11.2, "unit": "%", "volatility": 0.02 },
+        "customerSatisfaction": { "value": 82, "unit": "分", "volatility": 0.05 },
+        "employeeProductivity": { "value": 12000, "unit": "元/人", "volatility": 0.07 }
+      }
+    },
+    "anomaly": {
+      "name": "异常事件",
+      "description": "突发情况导致数据异常波动",
+      "baseMetrics": {
+        "totalRevenue": { "value": 4500000, "unit": "元", "volatility": 0.3 },
+        "newCustomers": { "value": 5000, "unit": "人", "volatility": 0.4 },
+        "customerRetention": { "value": 60, "unit": "%", "volatility": 0.25 },
+        "averageOrderValue": { "value": 750, "unit": "元", "volatility": 0.15 },
+        "operationalCost": { "value": 1900000, "unit": "元", "volatility": 0.1 },
+        "profitMargin": { "value": 18, "unit": "%", "volatility": 0.1 },
+        "marketShare": { "value": 9.8, "unit": "%", "volatility": 0.05 },
+        "customerSatisfaction": { "value": 75, "unit": "分", "volatility": 0.1 },
+        "employeeProductivity": { "value": 9000, "unit": "元/人", "volatility": 0.12 }
+      }
+    }
+  },
+  "regionalData": {
+    "north": { "name": "北区", "weight": 0.28, "growth": 0.06 },
+    "central": { "name": "中区", "weight": 0.32, "growth": 0.09 },
+    "south": { "name": "南区", "weight": 0.25, "growth": 0.14 },
+    "west": { "name": "西区", "weight": 0.15, "growth": 0.18 }
+  },
+  "industrySectors": [
+    { "name": "科技产品", "revenueShare": 0.38, "profitMargin": 32 },
+    { "name": "健康医疗", "revenueShare": 0.25, "profitMargin": 35 },
+    { "name": "教育培训", "revenueShare": 0.18, "profitMargin": 28 },
+    { "name": "零售服务", "revenueShare": 0.12, "profitMargin": 22 },
+    { "name": "其他业务", "revenueShare": 0.07, "profitMargin": 20 }
+  ],
+  "timePatterns": {
+    "morning": { "hours": [6, 7, 8, 9, 10, 11], "multiplier": 0.7 },
+    "noon": { "hours": [12, 13, 14], "multiplier": 0.5 },
+    "afternoon": { "hours": [15, 16, 17], "multiplier": 1.0 },
+    "evening": { "hours": [18, 19, 20, 21], "multiplier": 1.3 },
+    "night": { "hours": [22, 23, 0, 1, 2, 3, 4, 5], "multiplier": 0.3 }
+  },
+  "competitorData": [
+    { "name": "竞争对手A", "marketShare": 18.5, "growthRate": 0.08 },
+    { "name": "竞争对手B", "marketShare": 15.2, "growthRate": 0.12 },
+    { "name": "竞争对手C", "marketShare": 10.8, "growthRate": 0.05 },
+    { "name": "其他竞争对手", "marketShare": 43.0, "growthRate": 0.03 }
+  ],
+  "riskAssessment": [
+    { "category": "市场风险", "level": 3, "impact": "中等" },
+    { "category": "运营风险", "level": 2, "impact": "低" },
+    { "category": "财务风险", "level": 4, "impact": "高" },
+    { "category": "技术风险", "level": 2, "impact": "低" },
+    { "category": "法律风险", "level": 3, "impact": "中等" }
+  ]
+}
