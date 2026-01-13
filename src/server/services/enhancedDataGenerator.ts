@@ -100,26 +100,20 @@ export class EnhancedDataGenerator {
   generateData(
     scenario: ScenarioType,
     previousData?: any
-  ): any {
+  ): ExtendedGeneratedData {
     const scenarioConfig = this.config.scenarios[scenario] || this.config.scenarios.normal;
 
     // 生成指标数据
     const metrics = this.generateMetrics(scenarioConfig.baseMetrics, previousData);
 
     // 生成趋势数据
-    const trend = this.generateTrend(metrics.find(m => m.name === '总收入')?.value || 8500000);
+    const trend = this.generateTrend(metrics.find(m => m.name === '营业收入')?.value || 5000000);
 
     // 生成地区数据
-    const regionalData = this.generateRegionalData(scenario, metrics.find(m => m.name === '总收入')?.value || 8500000);
+    const regionalData = this.generateRegionalData(scenario);
 
-    // 生成行业部门数据
-    const industryData = this.generateIndustryData(scenario, metrics.find(m => m.name === '总收入')?.value || 8500000);
-
-    // 生成竞争对手数据
-    const competitorData = this.generateCompetitorData();
-
-    // 生成风险评估数据
-    const riskData = this.generateRiskData();
+    // 生成产品分类数据
+    const productData = this.generateProductData(scenario);
 
     // 生成洞察和建议
     const insight = this.generateInsight(scenario, metrics);
@@ -132,9 +126,7 @@ export class EnhancedDataGenerator {
       metrics,
       trend,
       regionalData,
-      industryData,
-      competitorData,
-      riskData,
+      productData,
       insight,
       suggestion,
       alerts
@@ -150,15 +142,13 @@ export class EnhancedDataGenerator {
   ): ExtendedMetric[] {
     const metrics: ExtendedMetric[] = [];
     const metricNames: Record<string, string> = {
-      totalRevenue: '总收入',
-      newCustomers: '新客户数',
-      customerRetention: '客户留存率',
-      averageOrderValue: '平均订单价值',
-      operationalCost: '运营成本',
-      profitMargin: '利润率',
-      marketShare: '市场份额',
-      customerSatisfaction: '客户满意度',
-      employeeProductivity: '员工生产力'
+      revenue: '营业收入',
+      orders: '订单量',
+      activeUsers: '活跃用户',
+      conversionRate: '转化率',
+      avgOrderValue: '客单价',
+      grossMargin: '毛利率',
+      repurchaseRate: '复购率'
     };
 
     Object.entries(baseMetrics).forEach(([key, config]) => {
@@ -227,12 +217,12 @@ export class EnhancedDataGenerator {
   /**
    * 生成地区数据
    */
-  private generateRegionalData(scenario: ScenarioType, totalRevenue: number): any[] {
-    const regionalData: any[] = [];
+  private generateRegionalData(scenario: ScenarioType): RegionalData[] {
+    const regionalData: RegionalData[] = [];
     const scenarioMultiplier = this.getScenarioMultiplier(scenario);
 
     Object.entries(this.config.regionalData).forEach(([key, config]) => {
-      const baseValue = totalRevenue * config.weight * scenarioMultiplier;
+      const baseValue = 5000000 * config.weight * scenarioMultiplier;
       const randomFactor = 0.9 + Math.random() * 0.2;
       const value = Math.round(baseValue * randomFactor);
       const changePercent = this.roundValue(config.growth * 100 * scenarioMultiplier + (Math.random() - 0.5) * 10, 'regional');
@@ -248,96 +238,41 @@ export class EnhancedDataGenerator {
   }
 
   /**
-   * 生成行业部门数据
+   * 生成产品分类数据
    */
-  private generateIndustryData(scenario: ScenarioType, totalRevenue: number): any[] {
-    const industryData: any[] = [];
+  private generateProductData(scenario: ScenarioType): ProductCategoryData[] {
+    const productData: ProductCategoryData[] = [];
     const scenarioMultiplier = this.getScenarioMultiplier(scenario);
 
-    if (this.config.industrySectors) {
-      this.config.industrySectors.forEach(sector => {
-        const baseRevenue = totalRevenue * sector.revenueShare * scenarioMultiplier;
-        const randomFactor = 0.9 + Math.random() * 0.2;
-        const revenue = Math.round(baseRevenue * randomFactor);
+    this.config.productCategories.forEach(category => {
+      const baseRevenue = 5000000 * category.revenueShare * scenarioMultiplier;
+      const randomFactor = 0.9 + Math.random() * 0.2;
+      const revenue = Math.round(baseRevenue * randomFactor);
 
-        industryData.push({
-          name: sector.name,
-          revenue,
-          profitMargin: sector.profitMargin + (Math.random() - 0.5) * 5,
-          share: sector.revenueShare * 100
-        });
+      productData.push({
+        name: category.name,
+        revenue,
+        margin: category.margin + (Math.random() - 0.5) * 5,
+        share: category.revenueShare * 100
       });
-    } else {
-      // 默认行业数据
-      industryData.push(
-        { name: '科技产品', revenue: Math.round(totalRevenue * 0.38 * scenarioMultiplier), profitMargin: 32, share: 38 },
-        { name: '健康医疗', revenue: Math.round(totalRevenue * 0.25 * scenarioMultiplier), profitMargin: 35, share: 25 },
-        { name: '教育培训', revenue: Math.round(totalRevenue * 0.18 * scenarioMultiplier), profitMargin: 28, share: 18 },
-        { name: '零售服务', revenue: Math.round(totalRevenue * 0.12 * scenarioMultiplier), profitMargin: 22, share: 12 },
-        { name: '其他业务', revenue: Math.round(totalRevenue * 0.07 * scenarioMultiplier), profitMargin: 20, share: 7 }
-      );
-    }
+    });
 
-    return industryData.sort((a, b) => b.revenue - a.revenue);
-  }
-
-  /**
-   * 生成竞争对手数据
-   */
-  private generateCompetitorData(): any[] {
-    if (this.config.competitorData) {
-      return this.config.competitorData.map(competitor => ({
-        name: competitor.name,
-        marketShare: competitor.marketShare,
-        growthRate: competitor.growthRate
-      }));
-    } else {
-      // 默认竞争对手数据
-      return [
-        { name: '竞争对手A', marketShare: 18.5, growthRate: 0.08 },
-        { name: '竞争对手B', marketShare: 15.2, growthRate: 0.12 },
-        { name: '竞争对手C', marketShare: 10.8, growthRate: 0.05 },
-        { name: '其他竞争对手', marketShare: 43.0, growthRate: 0.03 }
-      ];
-    }
-  }
-
-  /**
-   * 生成风险评估数据
-   */
-  private generateRiskData(): any[] {
-    if (this.config.riskAssessment) {
-      return this.config.riskAssessment.map(risk => ({
-        category: risk.category,
-        level: risk.level,
-        impact: risk.impact
-      }));
-    } else {
-      // 默认风险评估数据
-      return [
-        { category: '市场风险', level: 3, impact: '中等' },
-        { category: '运营风险', level: 2, impact: '低' },
-        { category: '财务风险', level: 4, impact: '高' },
-        { category: '技术风险', level: 2, impact: '低' },
-        { category: '法律风险', level: 3, impact: '中等' }
-      ];
-    }
+    return productData.sort((a, b) => b.revenue - a.revenue);
   }
 
   /**
    * 生成数据洞察
    */
   private generateInsight(scenario: ScenarioType, metrics: ExtendedMetric[]): string {
-    const totalRevenue = metrics.find(m => m.name === '总收入');
-    const newCustomers = metrics.find(m => m.name === '新客户数');
-    const customerRetention = metrics.find(m => m.name === '客户留存率');
-    const profitMargin = metrics.find(m => m.name === '利润率');
+    const revenue = metrics.find(m => m.name === '营业收入');
+    const orders = metrics.find(m => m.name === '订单量');
+    const users = metrics.find(m => m.name === '活跃用户');
 
     const scenarioInsights: Record<ScenarioType, string> = {
-      normal: `本期业务运行平稳，总收入${totalRevenue?.changePercent > 0 ? '增长' : '下降'}${Math.abs(totalRevenue?.changePercent || 0).toFixed(2)}%，新客户数${newCustomers?.changePercent > 0 ? '增长' : '下降'}${Math.abs(newCustomers?.changePercent || 0).toFixed(2)}%。各项指标在正常范围内波动，整体趋势保持稳定。`,
-      promotion: `受促销活动影响，本期总收入大幅增长${totalRevenue?.changePercent.toFixed(2)}%，新客户数增长${newCustomers?.changePercent.toFixed(2)}%。但利润率下降至${profitMargin?.value.toFixed(2)}%，促销成本对利润造成一定压力。`,
-      off_season: `本期处于业务淡季，总收入${totalRevenue && totalRevenue.changePercent < 0 ? '下降' : '仅增长'}${Math.abs(totalRevenue?.changePercent || 0).toFixed(2)}%，新客户数${newCustomers && newCustomers.changePercent < 0 ? '下降' : '增长'}${Math.abs(newCustomers?.changePercent || 0).toFixed(2)}%。建议在淡季加强成本控制和用户运营。`,
-      anomaly: `⚠️ 本期数据出现异常波动，总收入${totalRevenue?.changePercent.toFixed(2)}%，新客户数${newCustomers?.changePercent.toFixed(2)}%。需要立即排查原因，可能受外部因素影响。`
+      normal: `本期业务运行平稳，营业收入${revenue?.changePercent > 0 ? '增长' : '下降'}${Math.abs(revenue?.changePercent || 0).toFixed(2)}%，活跃用户${users?.changePercent > 0 ? '增长' : '下降'}${Math.abs(users?.changePercent || 0).toFixed(2)}%。各项指标在正常范围内波动，整体趋势保持稳定。`,
+      promotion: `受营销活动影响，本期营业收入大幅增长${revenue?.changePercent.toFixed(2)}%，订单量增长${orders?.changePercent.toFixed(2)}%。但毛利率下降至${revenue?.unit === '%' ? revenue?.value : '32'}%，促销成本对利润造成一定压力。`,
+      off_season: `本期处于销售淡季，营业收入${revenue && revenue.changePercent < 0 ? '下降' : '仅增长'}${Math.abs(revenue?.changePercent || 0).toFixed(2)}%，活跃用户${users && users.changePercent < 0 ? '下降' : '增长'}${Math.abs(users?.changePercent || 0).toFixed(2)}%。建议在淡季加强成本控制和用户运营。`,
+      anomaly: `⚠️ 本期数据出现异常波动，营业收入${revenue?.changePercent.toFixed(2)}%，活跃用户${users?.changePercent.toFixed(2)}%。需要立即排查原因，可能受外部因素影响。`
     };
 
     return scenarioInsights[scenario];
@@ -365,31 +300,31 @@ export class EnhancedDataGenerator {
 
     // 根据指标生成预警
     metrics.forEach(metric => {
-      if (metric.name === '利润率' && metric.value < 25) {
+      if (metric.name === '毛利率' && metric.value < 30) {
         alerts.push({
           level: 'warning',
-          message: `利润率低于25%，需要关注成本控制`
+          message: `毛利率低于30%，需要关注成本控制`
         });
       }
 
-      if (metric.name === '利润率' && metric.value < 20) {
+      if (metric.name === '毛利率' && metric.value < 25) {
         alerts.push({
           level: 'critical',
-          message: `利润率严重偏低，请立即采取行动！`
+          message: `毛利率严重偏低，请立即采取行动！`
         });
       }
 
-      if (metric.name === '新客户数' && metric.changePercent < -20) {
+      if (metric.name === '活跃用户' && metric.changePercent < -20) {
         alerts.push({
           level: 'warning',
-          message: `新客户数大幅下降${Math.abs(metric.changePercent).toFixed(2)}%`
+          message: `活跃用户大幅下降${Math.abs(metric.changePercent).toFixed(2)}%`
         });
       }
 
-      if (metric.name === '客户留存率' && metric.value < 70) {
+      if (metric.name === '转化率' && metric.value < 2.5) {
         alerts.push({
           level: 'info',
-          message: `客户留存率偏低，建议优化客户维护策略`
+          message: `转化率偏低，建议优化营销策略`
         });
       }
     });
@@ -398,7 +333,7 @@ export class EnhancedDataGenerator {
     if (scenario === 'anomaly') {
       alerts.push({
         level: 'critical',
-        message: '检测到异常事件，请立即处理！'
+        message: '检测到特殊事件，请立即处理！'
       });
     }
 
@@ -435,7 +370,7 @@ export class EnhancedDataGenerator {
     return {
       scenarios: {
         normal: {
-          name: '正常运营',
+          name: '常规运营',
           description: '业务平稳发展',
           baseMetrics: {
             revenue: { value: 5000000, unit: '元', volatility: 0.05 },
@@ -448,7 +383,7 @@ export class EnhancedDataGenerator {
           }
         },
         promotion: {
-          name: '促销活动',
+          name: '营销活动',
           description: '促销带来增长',
           baseMetrics: {
             revenue: { value: 7500000, unit: '元', volatility: 0.12 },
@@ -461,7 +396,7 @@ export class EnhancedDataGenerator {
           }
         },
         off_season: {
-          name: '业务淡季',
+          name: '销售淡季',
           description: '市场需求疲软',
           baseMetrics: {
             revenue: { value: 3500000, unit: '元', volatility: 0.1 },
@@ -474,7 +409,7 @@ export class EnhancedDataGenerator {
           }
         },
         anomaly: {
-          name: '异常事件',
+          name: '特殊事件',
           description: '突发情况',
           baseMetrics: {
             revenue: { value: 2500000, unit: '元', volatility: 0.3 },

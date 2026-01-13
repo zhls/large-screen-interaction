@@ -21,7 +21,7 @@ router.post('/generate', async (req, res) => {
     const { scenario, scenarioDescription, previousData, useAI = true } = req.body;
 
     // 验证scenario
-    const validScenarios = ['normal', 'promotion', 'off_season', 'anomaly', 'custom'];
+    const validScenarios = ['normal', 'promotion', 'off_season', 'anomaly'];
     if (!scenario || !validScenarios.includes(scenario)) {
       return res.status(400).json({
         success: false,
@@ -29,18 +29,10 @@ router.post('/generate', async (req, res) => {
       });
     }
 
-    // 验证custom场景需要描述
-    if (scenario === 'custom' && !scenarioDescription) {
-      return res.status(400).json({
-        success: false,
-        error: '自定义场景必须提供场景描述'
-      });
-    }
-
     let data;
 
     // 使用增强生成器（推荐）
-    if (!useAI || scenario === 'custom') {
+    if (!useAI) {
       // 直接使用增强生成器
       console.log('[DataAPI] Using enhanced data generator');
       data = enhancedDataGenerator.generateData(scenario, previousData);
@@ -121,11 +113,10 @@ router.get('/scenarios', (req, res) => {
   res.json({
     success: true,
     scenarios: [
-      { value: 'normal', label: '正常运营', description: '业务平稳发展，小幅增长' },
-      { value: 'promotion', label: '促销活动', description: '促销带来数据大幅上升' },
-      { value: 'off_season', label: '业务淡季', description: '市场需求疲软，数据下降' },
-      { value: 'anomaly', label: '异常事件', description: '突发情况导致数据异常' },
-      { value: 'custom', label: '自定义场景', description: '描述特定场景，AI生成数据' }
+      { value: 'normal', label: '常规运营', description: '业务平稳发展，小幅增长' },
+      { value: 'promotion', label: '营销活动', description: '促销带来数据大幅上升' },
+      { value: 'off_season', label: '销售淡季', description: '市场需求疲软，数据下降' },
+      { value: 'anomaly', label: '特殊事件', description: '突发情况导致数据异常' }
     ]
   });
 });

@@ -154,112 +154,115 @@ export const ApiKeyConfig: React.FC<ApiKeyConfigProps> = ({ onConfigured }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-teal-900 via-green-800 to-teal-900 flex items-center justify-center p-6">
       <div className="w-full max-w-2xl">
-        <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
+        <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10 shadow-xl">
           {/* 标题 */}
-          <div className="text-center mb-8">
-            <div className="text-6xl mb-4">🔑</div>
-            <h1 className="text-3xl font-bold text-white mb-2">配置 API 密钥</h1>
-            <p className="text-gray-300">
-              请输入您的服务密钥以启用 BI 数据讲解功能
+          <div className="text-center mb-10">
+            <div className="text-5xl mb-6">🛡️</div>
+            <h1 className="text-2xl font-bold text-white mb-3">服务授权配置</h1>
+            <p className="text-gray-300 text-sm">
+              请输入您的授权密钥以激活智能数据讲解能力
             </p>
           </div>
 
           {/* 表单 */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* 魔搭AI密钥 */}
-            <div>
-              <label className="block text-white font-medium mb-2">
-                魔搭社区 API 密钥 <span className="text-red-400">*</span>
+            <div className="bg-white/5 rounded-xl p-5 border border-white/10">
+              <label className="block text-white font-medium mb-3">
+                魔搭社区 API 密钥 <span className="text-green-400">*</span>
               </label>
               <input
                 type="text"
                 value={modelscopeApiKey}
                 onChange={(e) => setModelscopeApiKey(e.target.value)}
-                placeholder="ms-xxxxxxxxxxxxxxxx"
-                className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="ms-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                className="w-full px-4 py-3 bg-black/30 border border-teal-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 required
               />
-              <p className="text-gray-400 text-sm mt-2">
-                获取方式：访问 <a href="https://modelscope.cn" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">魔搭社区</a> 创建新令牌
+              <p className="text-gray-400 text-xs mt-2">
+                🔗 访问 <a href="https://modelscope.cn" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">魔搭社区</a> 创建个人令牌
               </p>
             </div>
 
-            {/* 魔珐星云 App ID */}
-            <div>
-              <div className="flex justify-between items-center mb-2">
+            {/* 魔珐星云配置 */}
+            <div className="bg-white/5 rounded-xl p-5 border border-white/10">
+              <div className="flex justify-between items-center mb-3">
                 <label className="block text-white font-medium">
-                  魔珐星云 App ID <span className="text-red-400">*</span>
+                  魔珐星云应用配置 <span className="text-green-400">*</span>
                 </label>
                 <button
                   type="button"
                   onClick={handleUseDemoKeys}
-                  className="text-sm bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 px-3 py-1 rounded-lg transition"
+                  className="text-xs bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 px-3 py-1 rounded-md transition"
                 >
-                  ✨ 使用演示密钥
+                  🎯 快速配置演示密钥
                 </button>
               </div>
+              
+              {/* App ID */}
               <input
                 type="text"
                 value={xmovAppId}
                 onChange={(e) => setXmovAppId(e.target.value)}
-                placeholder="xxxxxxxxxx"
-                className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="应用ID"
+                className="w-full px-4 py-3 bg-black/30 border border-teal-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent mb-3"
                 required
               />
-            </div>
-
-            {/* 魔珐星云 App Secret */}
-            <div>
-              <label className="block text-white font-medium mb-2">
-                魔珐星云 App Secret <span className="text-red-400">*</span>
-              </label>
+              
+              {/* App Secret */}
               <div className="relative">
                 <input
                   type={showSecret ? 'text' : 'password'}
                   value={xmovAppSecret}
                   onChange={(e) => setXmovAppSecret(e.target.value)}
-                  placeholder="xxxxxxxxxx"
-                  className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-24"
+                  placeholder="应用密钥"
+                  className="w-full px-4 py-3 bg-black/30 border border-teal-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent pr-20"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowSecret(!showSecret)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-teal-400 transition"
                 >
-                  {showSecret ? '👁️' : '👁️‍🗨️'}
+                  {showSecret ? '🙈' : '👀'}
                 </button>
               </div>
-              <p className="text-gray-400 text-sm mt-2">
-                获取方式：访问 <a href="https://xingyun3d.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">魔珐星云控制台</a> 创建应用
+              <p className="text-gray-400 text-xs mt-2">
+                🔗 访问 <a href="https://xingyun3d.com" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">魔珐星云控制台</a> 创建应用
               </p>
             </div>
 
             {/* 错误提示 */}
             {error && (
-              <div className="bg-red-500/20 border border-red-500/50 text-red-300 px-4 py-3 rounded-xl">
-                {error}
+              <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg">
+                <div className="flex items-start gap-2">
+                  <span className="text-lg">⚠️</span>
+                  <span>{error}</span>
+                </div>
               </div>
             )}
 
             {/* 测试结果 */}
             {testResult && (
-              <div className={`p-4 rounded-xl border ${
+              <div className={`p-4 rounded-lg border ${
                 testResult.modelscope && testResult.xmov
-                  ? 'bg-green-500/20 border-green-500/50 text-green-300'
-                  : 'bg-yellow-500/20 border-yellow-500/50 text-yellow-300'
+                  ? 'bg-green-500/10 border-green-500/30 text-green-300'
+                  : 'bg-yellow-500/10 border-yellow-500/30 text-yellow-300'
               }`}>
-                <div className="font-medium mb-2">📋 测试结果</div>
-                <div className="space-y-1 text-sm">
+                <div className="font-medium mb-2 flex items-center gap-2">
+                  <span>📊</span>
+                  <span>授权验证结果</span>
+                </div>
+                <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
-                    <span>{testResult.modelscope ? '✅' : '❌'}</span>
-                    <span>魔搭社区密钥: {testResult.modelscope ? '有效' : '无效'}</span>
+                    <span>{testResult.modelscope ? '✓' : '✗'}</span>
+                    <span>魔搭社区授权: {testResult.modelscope ? '通过' : '失败'}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span>{testResult.xmov ? '✅' : '❌'}</span>
-                    <span>魔珐星云密钥: {testResult.xmov ? '有效' : '无效'}</span>
+                    <span>{testResult.xmov ? '✓' : '✗'}</span>
+                    <span>魔珐星云授权: {testResult.xmov ? '通过' : '失败'}</span>
                   </div>
                   <div className="mt-2 text-xs opacity-80">{testResult.message}</div>
                 </div>
@@ -267,48 +270,50 @@ export const ApiKeyConfig: React.FC<ApiKeyConfigProps> = ({ onConfigured }) => {
             )}
 
             {/* 按钮 */}
-            <div className="flex gap-3">
+            <div className="flex flex-col gap-3">
               <button
                 type="submit"
                 disabled={isSaving}
-                className="flex-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-xl font-medium hover:from-blue-600 hover:to-purple-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white py-3 rounded-lg font-medium hover:from-teal-700 hover:to-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSaving ? '保存中...' : '开始使用'}
+                {isSaving ? '正在激活...' : '激活服务'}
               </button>
-
-              <button
-                type="button"
-                onClick={handleTestKeys}
-                disabled={isTesting || !modelscopeApiKey || !xmovAppId || !xmovAppSecret}
-                className="px-6 bg-green-500/80 hover:bg-green-500 text-white py-3 rounded-xl font-medium transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-              >
-                {isTesting ? '🔄 测试中...' : '🧪 测试密钥'}
-              </button>
-
-              {modelscopeApiKey && xmovAppId && xmovAppSecret && (
+              
+              <div className="flex gap-3">
                 <button
                   type="button"
-                  onClick={handleClear}
-                  className="px-6 bg-white/10 text-white py-3 rounded-xl font-medium hover:bg-white/20 transition"
+                  onClick={handleTestKeys}
+                  disabled={isTesting || !modelscopeApiKey || !xmovAppId || !xmovAppSecret}
+                  className="flex-1 bg-black/30 text-white py-3 rounded-lg font-medium hover:bg-black/20 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  清除
+                  {isTesting ? '🔄 验证中...' : '验证授权'}
                 </button>
-              )}
+                
+                {modelscopeApiKey && xmovAppId && xmovAppSecret && (
+                  <button
+                    type="button"
+                    onClick={handleClear}
+                    className="px-4 bg-white/5 text-white py-3 rounded-lg font-medium hover:bg-white/10 transition"
+                  >
+                    重置
+                  </button>
+                )}
+              </div>
             </div>
           </form>
 
           {/* 安全提示 */}
-          <div className="mt-8 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
-            <p className="text-blue-300 text-sm">
-              🔒 <strong>隐私安全提示：</strong>您的密钥将仅保存在浏览器本地存储中，
-              不会上传到我们的服务器。请妥善保管您的密钥，不要在公共设备上使用。
+          <div className="mt-6 p-4 bg-teal-500/5 border border-teal-500/20 rounded-lg">
+            <p className="text-teal-300 text-xs">
+              🛡️ <strong>安全说明：</strong>您的授权信息仅存储在本地浏览器中，
+              不会被传输至任何服务器。为保障账户安全，请避免在公共设备上操作。
             </p>
           </div>
         </div>
 
         {/* 页脚 */}
-        <div className="text-center mt-6 text-gray-400 text-sm">
-          BI 数据讲解方向 | 魔珐星云黑客松
+        <div className="text-center mt-5 text-gray-500 text-xs">
+          © 2026 智能数据讲解系统 | 安全授权
         </div>
       </div>
     </div>

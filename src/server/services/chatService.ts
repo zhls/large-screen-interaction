@@ -47,7 +47,7 @@ export class ChatService {
 
     if (currentData) {
       prompt += `\n\n当前业务数据概况：\n`;
-      prompt += `场景：${currentData.scenario || '正常运营'}\n`;
+      prompt += `场景：${currentData.scenario || '常规运营'}\n`;
 
       if (currentData.metrics && Array.isArray(currentData.metrics)) {
         prompt += `\n【核心指标】\n`;

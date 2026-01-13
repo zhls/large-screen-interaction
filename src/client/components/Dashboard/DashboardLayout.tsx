@@ -33,7 +33,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, last
 
   return (
     <div
-      className="bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-950 h-screen w-screen overflow-hidden flex flex-col"
+      className="bg-gradient-to-br from-teal-900 via-green-900 to-teal-900 h-screen w-screen overflow-hidden flex flex-col"
       style={{
         transform: `scale(${scale})`,
         transformOrigin: 'top left',
@@ -42,7 +42,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, last
       }}
     >
       {/* 顶部标题栏 */}
-      <header className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-8 py-4 flex justify-between items-center flex-shrink-0 border-b border-emerald-500/30">
+      <header className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-8 py-3 flex justify-between items-center flex-shrink-0">
         <div className="flex items-center gap-4">
           <div className="text-4xl">💹</div>
           <div>
@@ -51,30 +51,17 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, last
           </div>
         </div>
 
-        <div className="flex items-end gap-6">
-          <div className="text-right space-y-1">
-            <div className="text-2xl font-bold font-mono" id="current-time">00:00:00</div>
-            <div className="text-xs opacity-80">{new Date().toLocaleDateString('zh-CN')}</div>
-          </div>
-          
-          <div className="text-right space-y-1">
-            <div className="text-sm font-medium">数据状态</div>
-            <div className="text-xs opacity-80 space-x-3">
-              <span className="flex items-center gap-1 justify-end">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                <span>实时更新</span>
-              </span>
-              <span>上次: {formatLastUpdateTime(lastUpdateTime)}</span>
-            </div>
+        <div className="text-right space-y-1">
+          <div className="text-2xl font-bold" id="current-time">00:00:00</div>
+          <div className="text-xs opacity-80 space-x-3">
+            <span>系统状态: <span className="text-green-400">运行中</span></span>
           </div>
         </div>
       </header>
 
       {/* 主内容区 */}
-      <main className="flex-1 p-8 overflow-y-auto">
-        <div className="max-w-7xl mx-auto">
-          {children}
-        </div>
+      <main className="flex-1 p-6 overflow-hidden">
+        {children}
       </main>
     </div>
   );

@@ -4,7 +4,7 @@ import keyService from './keyService';
 /**
  * 场景类型
  */
-export type ScenarioType = 'normal' | 'promotion' | 'off_season' | 'anomaly' | 'custom';
+export type ScenarioType = 'normal' | 'promotion' | 'off_season' | 'anomaly';
 
 /**
  * 场景信息
@@ -161,11 +161,10 @@ class DataService {
       console.error('[DataService] Get scenarios error:', error);
       // 返回默认场景列表
       return [
-        { value: 'normal', label: '正常运营', description: '业务平稳发展，小幅增长' },
-        { value: 'promotion', label: '促销活动', description: '促销带来数据大幅上升' },
-        { value: 'off_season', label: '业务淡季', description: '市场需求疲软，数据下降' },
-        { value: 'anomaly', label: '异常事件', description: '突发情况导致数据异常' },
-        { value: 'custom', label: '自定义场景', description: '描述特定场景，AI生成数据' }
+        { value: 'normal', label: '常规运营', description: '业务平稳发展，小幅增长' },
+        { value: 'promotion', label: '营销活动', description: '促销带来数据大幅上升' },
+        { value: 'off_season', label: '销售淡季', description: '市场需求疲软，数据下降' },
+        { value: 'anomaly', label: '特殊事件', description: '突发情况导致数据异常' }
       ];
     }
   }

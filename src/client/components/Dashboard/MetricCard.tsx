@@ -32,21 +32,21 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-      <div className="flex justify-between items-start mb-4">
+    <div className="bg-black/30 backdrop-blur-lg rounded-xl p-4 border border-white/20">
+      <div className="flex justify-between items-start mb-3">
         <div>
-          <p className="text-gray-300 text-sm mb-1">{title}</p>
+          <p className="text-gray-300 text-xs mb-1">{title}</p>
           <div className="flex items-baseline">
-            <span className="text-4xl font-bold text-white">{value.toLocaleString()}</span>
-            <span className="text-lg text-gray-400 ml-2">{unit}</span>
+            <span className="text-2xl font-bold text-white">{value.toLocaleString()}</span>
+            <span className="text-sm text-gray-400 ml-2">{unit}</span>
           </div>
         </div>
-        <span className="text-4xl">{icon}</span>
+        <span className="text-2xl">{icon}</span>
       </div>
 
       <div className={`flex items-center ${getTrendColor()}`}>
-        <span className="text-xl mr-1">{getTrendIcon()}</span>
-        <span className="text-sm">
+        <span className="text-sm mr-1">{getTrendIcon()}</span>
+        <span className="text-xs">
           {changePercent > 0 ? '增长' : changePercent < 0 ? '下降' : '持平'} {Math.abs(changePercent).toFixed(2)}%
         </span>
         <span className="text-gray-400 text-xs ml-2">

@@ -31,7 +31,7 @@ app.use('/api/chat', chatRoutes);
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
-    service: 'bi-data-explainer',
+    service: 'large-screen-interaction',
     mode: isDev ? 'development' : 'production',
     timestamp: new Date().toISOString()
   });
