@@ -230,12 +230,12 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ currentData, onSpeak }) => {
 
   // 快捷问题
   const quickQuestions = [
-    '营收怎么样？',
-    '有什么预警吗？',
+    '营收如何？',
+    '如何提高转化率？',
     '哪个地区表现最好？',
-    '哪个产品营收最高？',
-    '毛利率为什么下降了？',
-    '转化率如何提升？'
+    '什么产品营收最高？',
+    '毛利率下降的原因是什么？',
+    '有哪些预警吗？'
   ];
 
   return (

@@ -241,7 +241,7 @@ function App() {
           {/* 右侧：视图切换 */}
           <div className="col-span-4">
             <div className="grid grid-cols-2 gap-2 h-full">
-              {(['overview', 'regional', 'product', 'alerts'] as ViewMode[]).map((mode) => (
+              {(['overview', 'regional', 'product', 'chat'] as ViewMode[]).map((mode) => (
                 <button
                   key={mode}
                   onClick={() => setViewMode(mode)}
@@ -254,7 +254,8 @@ function App() {
                   {mode === 'overview' ? '📊 运营总览' : ''}
                   {mode === 'regional' ? '🌍 区域分析' : ''}
                   {mode === 'product' ? '📦 产品表现' : ''}
-                  {mode === 'alerts' ? '🔔 异常预警' : ''}
+                  {mode === 'chat' ? '💬 实时问答' : ''}
+                  {/* {mode === 'alerts' ? '🔔 异常预警' : ''} */}
                 </button>
               ))}
             </div>
